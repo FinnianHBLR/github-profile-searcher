@@ -6,14 +6,36 @@ import { useState, useEffect } from 'react'
 function App() {
   // Started 10:00AM 10/04/2023 all basic features finished at 1:00PM 10/04/2023
   // Theme state, passed to all components that need to change their theme.
-  const [theme, setTheme] = useState('.dark');
+  const [theme, setTheme] = useState('Light');
 
   return (
     <div>
       <SearchLogic theme={theme} />
+      <SliderDisplay theme={theme} setTheme={setTheme}/>
     </div>
   )
 }
+
+function SliderDisplay({ theme, setTheme }) {
+
+  const handleClick = (event) => {
+    // If theme is truthy, set to dark, otherwise light. Light/Dark are used in to define the second part of a className e.g. formDark vs. formLight.
+    if(event.target.checked) {
+      setTheme('Dark');
+    } else {
+      setTheme('Light')
+    }
+  // DEBUG console.log(theme);
+  }
+
+  return (
+    <label class="switch">
+      <input type="checkbox" onClick={handleClick}/>
+      <span class="slider round"></span>
+    </label>
+  )
+}
+
 
 function SearchLogic({ theme }) {
   // Input state (for search bar), API request state for user information returned from the API request to GitHub. Info is passed to DisplayRepo for display.
@@ -23,13 +45,13 @@ function SearchLogic({ theme }) {
   // Check that requestAPIResult.user (user information) is defined before display. Could also check if requestAPIResult.repo is there as well.
   return (
     <div>
-      <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} />
+      <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} theme={theme}/>
       {requestAPIResult.user && <DisplayRepo user={requestAPIResult.user} repos={requestAPIResult.repos} />}
     </div>
   );
 }
 
-function SearchInput({ setInput, input, setAPIResult }) {
+function SearchInput({ setInput, input, setAPIResult, theme }) {
   // Make sure state is up to date by using setAPIResult.
   const handleInput = (event) => {
     // event.target.value refreneces the current data input in the form. event.preventDefault stops reloading.
@@ -53,8 +75,8 @@ function SearchInput({ setInput, input, setAPIResult }) {
       // Get repo info
       const repoResponse = await fetch(`https://api.github.com/users/${input}/repos`);
       const repoJSONData = await repoResponse.json();
-      
-      if(userJSONData.message == "Not Found"){
+
+      if (userJSONData.message == "Not Found") {
         alert("Sorry, could not find user!")
       } else {
         // Set both repo and user data using the setAPIResult passed in. Must be set at the same time.
@@ -65,9 +87,9 @@ function SearchInput({ setInput, input, setAPIResult }) {
 
   // Define the form. This could be its own component if need be. value={input} refrences the current state of the input.
   return (
-    <form onSubmit={requestGitHubAPI}>
-      <input type="text" onChange={handleInput} value={input} placeholder='Enter GitHub profile...' />
-      <input type="submit" value="Submit" />
+    <form className={`form${theme}`} onSubmit={requestGitHubAPI}>
+      <input className='formInput' type="text" onChange={handleInput} value={input} placeholder='Enter GitHub profile...' />
+      <input className='formSubmitBtn' type="submit" value="Submit" />
     </form>
   )
 }
@@ -79,7 +101,7 @@ function DisplayRepo({ user, repos }) {
   const top = (repoList) => {
     // Combine stars and forks (forks_count + stargazers_count) and add to each object.
     repoList.forEach(repo => repo.starAndFork = (repo.forks_count + repo.stargazers_count));
-    
+
     // Get each fork+star value in each object and sort the list so the highest fork+star is first in descending order.
     function sortByHighestForkStar(a, b) {
       if (a.starAndFork < b.starAndFork) {
@@ -105,7 +127,7 @@ function DisplayRepo({ user, repos }) {
       <p>Loading</p>
     )
   }
-  
+
   // Display user info along with a map to dispaly each repo.
   return (
     <div>
@@ -123,8 +145,8 @@ function DisplayRepo({ user, repos }) {
           <p>{repo.forks_count}</p>
           <p>{repo.stargazers_count}</p>
         </div>
-            )
-          )
+        )
+        )
         }
       </div>
     </div>
