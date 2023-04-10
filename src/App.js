@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Header } from './components/Header';
 import { SliderDisplay } from './components/Slider';
 import { SearchLogic } from './components/Search/SearchLogic';
@@ -19,6 +18,5 @@ function App() {
     </div>
   )
 }
-
 
 export default App;
