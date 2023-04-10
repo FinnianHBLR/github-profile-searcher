@@ -2,16 +2,21 @@ import logo from './logo.svg';
 import './App.css';
 
 import { useState, useEffect } from 'react'
-
+import { Helmet } from 'react-helmet';
 function App() {
   // Started 10:00AM 10/04/2023 all basic features finished at 1:00PM 10/04/2023
-  // Theme state, passed to all components that need to change their theme.
+  // Theme state, passed to all components that need to change their theme. This could be improved with something like higher-order Components.
   const [theme, setTheme] = useState('Light');
 
   return (
     <div>
+      <Helmet>
+        {/* Use the helment libary to set body colors. */}
+        <style>{`body { background-color: ${(theme === "Light") ? "#ebe2cc" : "#393646"}; }`}</style>
+      </Helmet>
+
+      <SliderDisplay theme={theme} setTheme={setTheme} />
       <SearchLogic theme={theme} />
-      <SliderDisplay theme={theme} setTheme={setTheme}/>
     </div>
   )
 }
@@ -20,17 +25,17 @@ function SliderDisplay({ theme, setTheme }) {
 
   const handleClick = (event) => {
     // If theme is truthy, set to dark, otherwise light. Light/Dark are used in to define the second part of a className e.g. formDark vs. formLight.
-    if(event.target.checked) {
+    if (event.target.checked) {
       setTheme('Dark');
     } else {
       setTheme('Light')
     }
-  // DEBUG console.log(theme);
+    // DEBUG console.log(theme);
   }
 
   return (
     <label class="switch">
-      <input type="checkbox" onClick={handleClick}/>
+      <input type="checkbox" onClick={handleClick} />
       <span class="slider round"></span>
     </label>
   )
@@ -45,7 +50,7 @@ function SearchLogic({ theme }) {
   // Check that requestAPIResult.user (user information) is defined before display. Could also check if requestAPIResult.repo is there as well.
   return (
     <div>
-      <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} theme={theme}/>
+      <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} theme={theme} />
       {requestAPIResult.user && <DisplayRepo user={requestAPIResult.user} repos={requestAPIResult.repos} />}
     </div>
   );
@@ -87,10 +92,14 @@ function SearchInput({ setInput, input, setAPIResult, theme }) {
 
   // Define the form. This could be its own component if need be. value={input} refrences the current state of the input.
   return (
-    <form className={`form${theme}`} onSubmit={requestGitHubAPI}>
-      <input className='formInput' type="text" onChange={handleInput} value={input} placeholder='Enter GitHub profile...' />
-      <input className='formSubmitBtn' type="submit" value="Submit" />
-    </form>
+    <div className='centerForm'>
+      <form className={`form${theme}`} onSubmit={requestGitHubAPI}>
+        <input className={`formInput formInput${theme}`} type="text" onChange={handleInput} value={input} placeholder='Enter GitHub profile...' />
+        <div className='centerContainer'>
+          <input className={`formSubmitBtn`} type="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
   )
 }
 
@@ -130,18 +139,23 @@ function DisplayRepo({ user, repos }) {
 
   // Display user info along with a map to dispaly each repo.
   return (
-    <div>
-      <div>
-        <p>Name: {user.name}</p>
-        <p>user name: {user.login}</p>
-        <img src={user.avatar_url} />
-        <p>Followers: {user.followers}</p>
-        <p>Repos: {user.public_repos}</p>
-      </div>
+    <div className={`userCard centerContainer`}>
+        <div className='imageAndNameConatiner centerContainer'>
+          <div className='imageContainer'>
+            <img src={user.avatar_url} />
+          </div>
+          <div className='nameContainer'>
+            <p>Name: {user.name}</p>
+            <p>Username: {user.login}</p>
+          </div>
+          </div>
+          <div>
+          <p>Followers: {user.followers}</p>
+          <p>Repositories: {user.public_repos}</p>
+        </div>
       <div>
         {repos && top(repos).map(repo => (<div>
-          <p>{repo.name}</p>
-          <p>{repo.html_url}</p>
+          <a href={repo.html_url}>{repo.name}</a>
           <p>{repo.forks_count}</p>
           <p>{repo.stargazers_count}</p>
         </div>

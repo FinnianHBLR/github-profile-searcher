@@ -60,18 +60,68 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/*---------*/
+
+.centerContainer{
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+}
+
+.centerForm{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+
 .formDark {
+  
 }
 
 .formLight {
 
 }
 
-form .formInput{
-  
-  
+form .formInput {
+  width: 100%;
+  border-radius: 25px;
+  height: 50px;
+  border-width: 10px;
+}
+
+form .formInputLight{
+  border-color: #ccc;
+}
+
+
+form .formInputDark{
+
 }
 
 form .formSubmitBtn{
-
+  width: 40vw;
+  height: 50px;
 } 
+
+
+
+.userCard {
+
+}
+
+.userCard .imageAndNameConatiner{
+  display: flex;
+}
+
+.userCard .imageAndNameConatiner img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.userCard .imageAndNameConatiner .imageContainer {
+  
+}
+.userCard .imageAndNameConatiner .nameContainer {
+  padding-left: 3vw;
+}
