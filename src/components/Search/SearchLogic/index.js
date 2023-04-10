@@ -3,7 +3,8 @@ import { SearchInput } from './SearchInput';
 import { DisplayUserRepo } from './SearchDisplay';
 
 export function SearchLogic({ darkMode }) {
-    // Input state (for search bar), API request state for user information returned from the API request to GitHub. Info is passed to DisplayRepo for display.
+    // Input state (for search bar), API request state for user information returned from the API request to GitHub. 
+    // Input is passed in from SearchInput, filtered, then passed onto DisplayRepo for display.
     const [input, setInput] = useState('');
     const [requestAPIResult, setAPIResult] = useState({});
     
