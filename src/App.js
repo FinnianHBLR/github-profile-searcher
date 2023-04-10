@@ -4,8 +4,8 @@ import './App.css';
 import { useState, useEffect } from 'react'
 
 function App() {
-  // Started 10AM 10/04/2023 all basic features finished at 1:00PM (1:20PM)
-
+  // Started 10:00AM 10/04/2023 all basic features finished at 1:00PM 10/04/2023
+  // Theme state, passed to all components that need to change their theme.
   const [theme, setTheme] = useState('.dark');
 
   return (
@@ -16,25 +16,28 @@ function App() {
 }
 
 function SearchLogic({ theme }) {
+  // Input state (for search bar), API request state for user information returned from the API request to GitHub. Info is passed to DisplayRepo for display.
   const [input, setInput] = useState('');
-  const [requestAPIResult, setAPIResult] = useState();
+  const [requestAPIResult, setAPIResult] = useState({});
 
+  // Check that requestAPIResult.user (user information) is defined before display. Could also check if requestAPIResult.repo is there as well.
   return (
     <div>
       <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} />
-      {requestAPIResult && <DisplayRepo user={requestAPIResult.user} repos={requestAPIResult.repos} />}
+      {requestAPIResult.user && <DisplayRepo user={requestAPIResult.user} repos={requestAPIResult.repos} />}
     </div>
   );
 }
 
 function SearchInput({ setInput, input, setAPIResult }) {
-  // Make sure state is up to date
+  // Make sure state is up to date by using setAPIResult.
   const handleInput = (event) => {
+    // event.target.value refreneces the current data input in the form. event.preventDefault stops reloading.
     event.preventDefault();
     setInput(event.target.value);
   }
 
-  // Submit and set response data on button click
+  // Submit and set response data onClick
   const requestGitHubAPI = async (event) => {
     // Stop reload on submit.
     event.preventDefault();
@@ -54,11 +57,13 @@ function SearchInput({ setInput, input, setAPIResult }) {
       if(userJSONData.message == "Not Found"){
         alert("Sorry, could not find user!")
       } else {
+        // Set both repo and user data using the setAPIResult passed in. Must be set at the same time.
         setAPIResult({ repos: repoJSONData, user: userJSONData });
       }
     }
   }
 
+  // Define the form. This could be its own component if need be. value={input} refrences the current state of the input.
   return (
     <form onSubmit={requestGitHubAPI}>
       <input type="text" onChange={handleInput} value={input} placeholder='Enter GitHub profile...' />
@@ -69,13 +74,13 @@ function SearchInput({ setInput, input, setAPIResult }) {
 
 
 function DisplayRepo({ user, repos }) {
-  console.log(repos)
+  // This takes in a user and multiple repos that are sorted and top 4 are displayed. This is designed to be reused in the case of multiple users.
 
   const top = (repoList) => {
-    // Combine stars and forks
-    // forks_count + stargazers_count
+    // Combine stars and forks (forks_count + stargazers_count) and add to each object.
     repoList.forEach(repo => repo.starAndFork = (repo.forks_count + repo.stargazers_count));
-
+    
+    // Get each fork+star value in each object and sort the list so the highest fork+star is first in descending order.
     function sortByHighestForkStar(a, b) {
       if (a.starAndFork < b.starAndFork) {
         return 1;
@@ -86,19 +91,22 @@ function DisplayRepo({ user, repos }) {
       }
     }
 
+    // Create the sorted list out of repoList (normal list with fork+star added).
     const sortedRepoList = repoList.sort(sortByHighestForkStar)
 
-    console.log(sortedRepoList);
+    // DEBUG: console.log(sortedRepoList);
+    // Slice the list to get the first 4 elements.
     return sortedRepoList.slice(0, 3);
   }
-
+  // If user is not defined yet, replace return with 'loading...'
   if (!user) {
     console.log('loading...');
     return (
       <p>Loading</p>
     )
   }
-
+  
+  // Display user info along with a map to dispaly each repo.
   return (
     <div>
       <div>
@@ -115,8 +123,8 @@ function DisplayRepo({ user, repos }) {
           <p>{repo.forks_count}</p>
           <p>{repo.stargazers_count}</p>
         </div>
-        )
-        )
+            )
+          )
         }
       </div>
     </div>
