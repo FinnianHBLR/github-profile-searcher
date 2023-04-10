@@ -155,9 +155,9 @@ function DisplayRepo({ user, repos }) {
         </div>
       <div>
         {repos && top(repos).map(repo => (<div>
-          <a href={repo.html_url}>{repo.name}</a>
-          <p>{repo.forks_count}</p>
-          <p>{repo.stargazers_count}</p>
+          <a href={repo.html_url} target="_blank">{repo.name}</a>
+          <p>Forks: {repo.forks_count}</p>
+          <p>Stars: {repo.stargazers_count}</p>
         </div>
         )
         )
