@@ -79,8 +79,6 @@
   border-radius: 50%;
 }
 
-/*---------*/
-
 
 .centerForm {
   margin: auto;
@@ -99,6 +97,12 @@ form .formInput {
   height: 50px;
   font-size: 40px;
 }
+
+form .formInput:focus{
+  outline: none;
+  box-shadow: 0 0 10px rgb(195, 220, 227);
+}
+
 
 form .formInputDarktrue {
   color: white;
@@ -119,10 +123,13 @@ form .formSubmitBtn {
   margin-top: 50px;
   cursor: pointer;
   background-color: rgb(218, 218, 218);
+  box-shadow: 5px 10px #0a1015;
+
 }
 
 form .formSubmitBtn:hover {
   color: rgb(37, 36, 36);
+  box-shadow: none;
 }
 
 form .formSubmitBtnDarktrue {
