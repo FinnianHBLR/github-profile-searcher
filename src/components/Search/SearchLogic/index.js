@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { SearchInput } from './SearchInput';
 import { DisplayUserRepo } from './SearchDisplay';
 
-export function SearchLogic({ darkMode }) {
+export function SearchLogic() {
     // Input state (for search bar), API request state for user information returned from the API request to GitHub. 
     // Input is passed in from SearchInput, filtered, then passed onto DisplayRepo for display.
     const [input, setInput] = useState('');
@@ -39,8 +39,8 @@ export function SearchLogic({ darkMode }) {
     // Check that requestAPIResult.user (user information) is defined before display. Could also check if requestAPIResult.repo is there as well.
     return (
       <div>
-        <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} darkMode={darkMode} />
-        {requestAPIResult.user && <DisplayUserRepo user={requestAPIResult.user} repos={requestAPIResult.repos} darkMode={darkMode} top={top4} />}
+        <SearchInput setInput={setInput} input={input} setAPIResult={setAPIResult} />
+        {requestAPIResult.user && <DisplayUserRepo user={requestAPIResult.user} repos={requestAPIResult.repos} top={top4} />}
       </div>
     );
   }
