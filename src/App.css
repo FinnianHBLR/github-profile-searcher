@@ -42,7 +42,7 @@ form .formSubmitBtn {
 
 }
 
-form .formSubmitBtn:hover {
+form .formSubmitBtn:active {
   color: rgb(37, 36, 36);
   box-shadow: none;
 }
@@ -98,6 +98,6 @@ form .formSubmitBtn:hover {
 
 }
 
-.themeSetterBtn:hover {
+.themeSetterBtn:active {
   box-shadow: none;
 }
