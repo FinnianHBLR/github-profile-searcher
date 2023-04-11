@@ -5,80 +5,6 @@
   padding: 10px;
 }
 
-.titleDarktrue {
-  color: white;
-}
-
-.switchContainer {
-  margin: auto;
-  width: fit-content;
-  float: right;
-  margin-right: 20px;
-}
-
-.switchContainer .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  font-size: larger;
-}
-
-.switchContainer .sliderTextDarktrue {
-  color: white;
-}
-
-.switchContainer .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.switchContainer .switch .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-
-.switchContainer .switch .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-
-.switchContainer .switch input:checked+.sliderDarktrue {
-  background-color: #1b2d3c;
-}
-
-.switchContainer .switch input:checked+.slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.switchContainer .switch .slider.round {
-  border-radius: 34px;
-}
-
-.switchContainer .switch .slider.round:before {
-  border-radius: 50%;
-}
-
 
 .centerForm {
   margin: auto;
@@ -86,8 +12,6 @@
   padding: 10px;
 }
 
-
-.formLight {}
 
 form .formInput {
   border-color: #0a1015;
@@ -98,19 +22,10 @@ form .formInput {
   font-size: 40px;
 }
 
-form .formInput:focus{
+form .formInput:focus {
   outline: none;
   box-shadow: 0 0 10px rgb(195, 220, 227);
 }
-
-
-form .formInputDarktrue {
-  color: white;
-  background-color: #1b2d3c;
-}
-
-
-form .formInputDark {}
 
 form .formSubmitBtn {
   width: 40vw;
@@ -122,7 +37,7 @@ form .formSubmitBtn {
   border-width: 2px;
   margin-top: 50px;
   cursor: pointer;
-  background-color: rgb(218, 218, 218);
+  background-color: #dadada;
   box-shadow: 5px 10px #0a1015;
 
 }
@@ -132,27 +47,9 @@ form .formSubmitBtn:hover {
   box-shadow: none;
 }
 
-form .formSubmitBtnDarktrue {
-  color: white;
-  background-color: #1b2d3c;
-}
-
-form .formSubmitBtnDarktrue:hover {
-  color: red;
-}
-
-
 .userCard {
   font-size: 20px;
   font-weight: 700;
-}
-
-.userCardDarktrue{
-  color: white;
-}
-
-.userCardDarktrue a {
-  color: red;
 }
 
 .userCard .imageAndNameConatiner {
@@ -185,4 +82,22 @@ form .formSubmitBtnDarktrue:hover {
 
 .followersAndrepositories .userRepositories {
   padding-left: 2vw;
+}
+
+.themeSetterBtn {
+  padding: 20px 30px;
+  float: right;
+  margin-right: 30px;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  border-style: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 5px 10px #0a1015;
+
+}
+
+.themeSetterBtn:hover {
+  box-shadow: none;
 }
